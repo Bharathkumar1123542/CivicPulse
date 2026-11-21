@@ -1,0 +1,704 @@
+import { User, Department, Category, Report, Comment, Notification, AuditLog } from './types.js';
+
+export const seedDepartments: Department[] = [
+  {
+    id: 'dept-pwd',
+    name: 'Public Works & Roads Infrastructure',
+    code: 'PWD',
+    headName: 'Er. R. S. Narayanan',
+    email: 'pwd.head@civicpulse.gov',
+    phone: '+91 80 2296 7401',
+    description: 'Responsible for municipal road networks, bridges, stormwater gutters, and pavement integrity.',
+    categories: ['cat-roads', 'cat-infra'],
+    officersCount: 14,
+    activeIssuesCount: 3,
+    resolvedIssuesCount: 42,
+    slaComplianceRate: 94.8,
+  },
+  {
+    id: 'dept-eb',
+    name: 'Electricity & Lighting Authority',
+    code: 'ELA',
+    headName: 'Smt. Kavitha Reddy',
+    email: 'lighting@civicpulse.gov',
+    phone: '+91 80 2296 7402',
+    description: 'Maintains streetlights, public transformers, junction poles, and prevents live wire hazards.',
+    categories: ['cat-lights', 'cat-electric'],
+    officersCount: 9,
+    activeIssuesCount: 2,
+    resolvedIssuesCount: 38,
+    slaComplianceRate: 98.2,
+  },
+  {
+    id: 'dept-swm',
+    name: 'Solid Waste Management & Sanitation',
+    code: 'SWM',
+    headName: 'Dr. Mohammed Farooq',
+    email: 'sanitation@civicpulse.gov',
+    phone: '+91 80 2296 7403',
+    description: 'Coordinates street sweeping, garbage clearance, community bins, and sanitization.',
+    categories: ['cat-waste'],
+    officersCount: 22,
+    activeIssuesCount: 4,
+    resolvedIssuesCount: 89,
+    slaComplianceRate: 92.5,
+  },
+  {
+    id: 'dept-water',
+    name: 'Water Supply & Sewerage Board',
+    code: 'WSSB',
+    headName: 'Er. Sandeep Joshi',
+    email: 'waterboard@civicpulse.gov',
+    phone: '+91 80 2296 7404',
+    description: 'Handles drinking water pipelines, sewer leakages, manholes, and drainage blocks.',
+    categories: ['cat-water'],
+    officersCount: 11,
+    activeIssuesCount: 1,
+    resolvedIssuesCount: 51,
+    slaComplianceRate: 96.1,
+  },
+  {
+    id: 'dept-parks',
+    name: 'Parks, Horticulture & Urban Forestry',
+    code: 'PHUF',
+    headName: 'Ananya Deshmukh',
+    email: 'parks@civicpulse.gov',
+    phone: '+91 80 2296 7405',
+    description: 'Oversees public green spaces, municipal gardens, fallen tree clearing, and children parks.',
+    categories: ['cat-parks'],
+    officersCount: 7,
+    activeIssuesCount: 1,
+    resolvedIssuesCount: 24,
+    slaComplianceRate: 97.4,
+  }
+];
+
+export const seedCategories: Category[] = [
+  {
+    id: 'cat-roads',
+    name: 'Damaged Roads & Potholes',
+    icon: 'Road',
+    description: 'Craters, asphalt cracks, potholes, dangerous road sinking, and loose gravel on carriage ways.',
+    defaultDepartmentId: 'dept-pwd',
+    defaultPriority: 'High',
+    slaHours: 48
+  },
+  {
+    id: 'cat-lights',
+    name: 'Broken Streetlights & Dark Spots',
+    icon: 'Lightbulb',
+    description: 'Non-functioning sodium/LED lamps, flickering lights, exposed wires, or dark dangerous zones.',
+    defaultDepartmentId: 'dept-eb',
+    defaultPriority: 'Medium',
+    slaHours: 24
+  },
+  {
+    id: 'cat-waste',
+    name: 'Garbage Accumulation & Illegal Dumping',
+    icon: 'Trash2',
+    description: 'Overflowing dustbins, roadside uncollected trash piles, animal scrounging, and bad odor.',
+    defaultDepartmentId: 'dept-swm',
+    defaultPriority: 'Medium',
+    slaHours: 12
+  },
+  {
+    id: 'cat-water',
+    name: 'Water Pipe Leakage & Sewage Block',
+    icon: 'Droplets',
+    description: 'Fresh pipeline burst, continuous drinking water loss, open or overflowing drain manhole.',
+    defaultDepartmentId: 'dept-water',
+    defaultPriority: 'High',
+    slaHours: 24
+  },
+  {
+    id: 'cat-electric',
+    name: 'Sparking Transformers & Live Wires',
+    icon: 'Zap',
+    description: 'Low-hanging cables, sparking power transformer, damaged junction box posing electrocution risk.',
+    defaultDepartmentId: 'dept-eb',
+    defaultPriority: 'Urgent',
+    slaHours: 12
+  },
+  {
+    id: 'cat-infra',
+    name: 'Damaged Public Footpaths & Railings',
+    icon: 'Building2',
+    description: 'Broken pavement tiles, missing drain slabs, fractured flyover railings, or bus shelter damage.',
+    defaultDepartmentId: 'dept-pwd',
+    defaultPriority: 'Medium',
+    slaHours: 72
+  },
+  {
+    id: 'cat-parks',
+    name: 'Fallen Trees & Public Park Hazards',
+    icon: 'Trees',
+    description: 'Uprooted tree branches blocking pathway, broken swings or gym equipment in public parks.',
+    defaultDepartmentId: 'dept-parks',
+    defaultPriority: 'Low',
+    slaHours: 48
+  }
+];
+
+export const seedUsers: User[] = [
+  {
+    id: 'user-citizen-1',
+    name: 'Vandhana Vijayakumar',
+    email: 'vandhana@citizen.org',
+    password: 'password123',
+    role: 'citizen',
+    phone: '+91 98450 12345',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250',
+    karma: {
+      points: 420,
+      tier: 'Gold Civic Hero',
+      badges: ['Eagle Eye', 'Community Guardian', 'Quick Responder', 'Verified Inspector'],
+    },
+    createdAt: '2026-01-10T09:00:00Z'
+  },
+  {
+    id: 'user-officer-1',
+    name: 'Rajesh Kumar',
+    email: 'officer.rajesh@civicpulse.gov',
+    password: 'password123',
+    role: 'officer',
+    phone: '+91 94480 87654',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250',
+    departmentId: 'dept-pwd',
+    departmentName: 'Public Works & Roads Infrastructure',
+    designation: 'Senior Ward Civil Engineer (Zone 4)',
+    createdAt: '2025-11-15T08:30:00Z'
+  },
+  {
+    id: 'user-officer-2',
+    name: 'Priya Sundaram',
+    email: 'officer.priya@civicpulse.gov',
+    password: 'password123',
+    role: 'officer',
+    phone: '+91 94480 87655',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250',
+    departmentId: 'dept-eb',
+    departmentName: 'Electricity & Lighting Authority',
+    designation: 'Sub-Divisional Electrical Inspector',
+    createdAt: '2025-12-01T10:00:00Z'
+  },
+  {
+    id: 'user-admin-1',
+    name: 'Dr. Anand Sharma',
+    email: 'admin@civicpulse.gov',
+    password: 'password123',
+    role: 'admin',
+    phone: '+91 98800 11223',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=250',
+    designation: 'Municipal Operations Director',
+    createdAt: '2025-10-01T08:00:00Z'
+  }
+];
+
+export const seedReports: Report[] = [
+  {
+    id: 'CP-2026-1041',
+    title: 'Severe Deep Pothole on 100ft Road intersection',
+    description: 'A dangerous 2-foot wide crater has formed right after the rain near 12th Main junction. Two scooter riders almost slipped this morning. Urgent patching required before peak traffic.',
+    category: 'Damaged Roads & Potholes',
+    priority: 'High',
+    status: 'In Progress',
+    location: {
+      address: '100ft Inner Ring Road, near 12th Main Signal, Indiranagar',
+      landmark: 'Opposite Metro Pillar 182',
+      latitude: 12.9719,
+      longitude: 77.6412,
+      city: 'Bengaluru',
+      pincode: '560038',
+      zone: 'East Zone'
+    },
+    images: [
+      'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=800'
+    ],
+    citizenId: 'user-citizen-1',
+    citizenName: 'Vandhana Vijayakumar',
+    citizenEmail: 'vandhana@citizen.org',
+    citizenPhone: '+91 98450 12345',
+    departmentId: 'dept-pwd',
+    departmentName: 'Public Works & Roads Infrastructure',
+    assignedOfficerId: 'user-officer-1',
+    assignedOfficerName: 'Rajesh Kumar',
+    assignedOfficerPhone: '+91 94480 87654',
+    upvotes: 28,
+    upvotedBy: ['user-citizen-1', 'user-officer-2'],
+    impactMultiplier: 2.8,
+    slaHours: 48,
+    slaDeadline: new Date(Date.now() + 18 * 3600 * 1000).toISOString(),
+    isSlaBreached: false,
+    audioTranscript: 'Large pothole about two feet across near twelfth main signal. Water has accumulated inside making it hard for two wheelers to see at night.',
+    aiAnalysis: {
+      suggestedCategory: 'Damaged Roads & Potholes',
+      confidence: 0.94,
+      suggestedPriority: 'High',
+      priorityReason: 'Keywords "deep crater", "scooter riders slipped", "peak traffic" indicate imminent pedestrian and commuter accident risk.',
+      summary: 'Hazardous 2-foot pothole at 100ft Ring Road intersection causing vehicle skidding; requires cold mix bituminous filling.',
+      detectedKeywords: ['crater', 'pothole', 'scooter slipped', 'peak traffic', 'rain'],
+      isPotentialDuplicate: false,
+      sentimentRisk: 'Elevated Hazard',
+      estimatedRemediationDays: 1
+    },
+    timeline: [
+      {
+        id: 'tl-1041-1',
+        status: 'Reported',
+        title: 'Issue Lodged by Citizen',
+        description: 'Vandhana Vijayakumar reported the road crater with live GPS location & photo.',
+        actorName: 'Vandhana Vijayakumar',
+        actorRole: 'citizen',
+        timestamp: '2026-03-01T08:15:00Z'
+      },
+      {
+        id: 'tl-1041-2',
+        status: 'Under Review',
+        title: 'AI Verification & Triage',
+        description: 'AI classified as Damaged Roads with 94% confidence. High Priority assigned.',
+        actorName: 'CivicPulse AI Engine',
+        actorRole: 'system',
+        timestamp: '2026-03-01T08:15:05Z'
+      },
+      {
+        id: 'tl-1041-3',
+        status: 'Assigned',
+        title: 'Assigned to Ward Engineer',
+        description: 'Dispatched to Rajesh Kumar (PWD Ward 82). Inspection schedule created.',
+        actorName: 'Dr. Anand Sharma',
+        actorRole: 'admin',
+        timestamp: '2026-03-01T09:40:00Z'
+      },
+      {
+        id: 'tl-1041-4',
+        status: 'In Progress',
+        title: 'Road Maintenance Crew on Site',
+        description: 'Cold-mix asphalt truck dispatched. Safety cones placed around work zone.',
+        actorName: 'Rajesh Kumar',
+        actorRole: 'officer',
+        timestamp: '2026-03-01T14:20:00Z'
+      }
+    ],
+    createdAt: '2026-03-01T08:15:00Z',
+    updatedAt: '2026-03-01T14:20:00Z'
+  },
+  {
+    id: 'CP-2026-1042',
+    title: 'Cluster of 4 Broken LED Streetlights creating Dark Corridor',
+    description: 'Four consecutive streetlights on 5th Cross residential lane have been completely dead for 5 days. Women and elderly residents feel unsafe walking back from the bus stop after 7 PM.',
+    category: 'Broken Streetlights & Dark Spots',
+    priority: 'Medium',
+    status: 'Resolved',
+    location: {
+      address: '5th Cross Road, Near Community Park, Koramangala 4th Block',
+      landmark: 'Adjacent to Rose Garden Gate 2',
+      latitude: 12.9345,
+      longitude: 77.6265,
+      city: 'Bengaluru',
+      pincode: '560034',
+      zone: 'South Zone'
+    },
+    images: [
+      'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&q=80&w=800'
+    ],
+    citizenId: 'user-citizen-1',
+    citizenName: 'Vandhana Vijayakumar',
+    citizenEmail: 'vandhana@citizen.org',
+    citizenPhone: '+91 98450 12345',
+    departmentId: 'dept-eb',
+    departmentName: 'Electricity & Lighting Authority',
+    assignedOfficerId: 'user-officer-2',
+    assignedOfficerName: 'Priya Sundaram',
+    assignedOfficerPhone: '+91 94480 87655',
+    upvotes: 35,
+    upvotedBy: ['user-citizen-1'],
+    impactMultiplier: 3.1,
+    slaHours: 24,
+    slaDeadline: '2026-03-01T19:30:00Z',
+    isSlaBreached: false,
+    aiAnalysis: {
+      suggestedCategory: 'Broken Streetlights & Dark Spots',
+      confidence: 0.98,
+      suggestedPriority: 'Medium',
+      priorityReason: 'Non-functioning street illumination over multiple poles in residential neighborhood posing public safety concerns.',
+      summary: '4 dead streetlights along 5th Cross corridor; potential feeder line or photocell switch breakdown.',
+      detectedKeywords: ['streetlights', 'dead', 'dark corridor', 'unsafe', 'bus stop'],
+      isPotentialDuplicate: false,
+      sentimentRisk: 'Elevated Hazard',
+      estimatedRemediationDays: 1
+    },
+    resolution: {
+      resolvedAt: '2026-03-02T16:45:00Z',
+      resolvedBy: 'Priya Sundaram',
+      resolutionNotes: 'Field team inspected the feeder pillar on Pole #12. The master timer switch and burnt surge fuse were replaced. All 4 72W LED fixtures tested and operational with automatic dusk-to-dawn sensors.',
+      evidenceImages: [
+        'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=800'
+      ],
+      citizenVerified: false,
+      workOrderNumber: 'WO-ELA-2026-402',
+      costEstimate: '₹ 4,200 (Municipal Lighting Maintenance Fund)'
+    },
+    timeline: [
+      {
+        id: 'tl-1042-1',
+        status: 'Reported',
+        title: 'Report Submitted',
+        description: 'Vandhana Vijayakumar highlighted dark walking hazard on 5th Cross.',
+        actorName: 'Vandhana Vijayakumar',
+        actorRole: 'citizen',
+        timestamp: '2026-02-28T19:30:00Z'
+      },
+      {
+        id: 'tl-1042-2',
+        status: 'Assigned',
+        title: 'Assigned to Lighting Inspector',
+        description: 'Assigned to Priya Sundaram. Service vehicle dispatched.',
+        actorName: 'Dr. Anand Sharma',
+        actorRole: 'admin',
+        timestamp: '2026-03-01T09:00:00Z'
+      },
+      {
+        id: 'tl-1042-3',
+        status: 'In Progress',
+        title: 'Cable Fault Isolation',
+        description: 'Feeder line test in progress with hydraulic ladder truck.',
+        actorName: 'Priya Sundaram',
+        actorRole: 'officer',
+        timestamp: '2026-03-02T11:00:00Z'
+      },
+      {
+        id: 'tl-1042-4',
+        status: 'Resolved',
+        title: 'Lights Replaced & Tested',
+        description: 'All 4 street lamps illuminated. Evidence photo uploaded. Awaiting citizen confirmation.',
+        actorName: 'Priya Sundaram',
+        actorRole: 'officer',
+        timestamp: '2026-03-02T16:45:00Z'
+      }
+    ],
+    createdAt: '2026-02-28T19:30:00Z',
+    updatedAt: '2026-03-02T16:45:00Z'
+  },
+  {
+    id: 'CP-2026-1043',
+    title: 'Overflowing Community Waste Dumpster attracting Stray Animals',
+    description: 'The municipal bin at 80ft Road Vegetable Market has not been cleared for 3 days. Trash is spilling across the sidewalk, blocking pedestrian movement and creating severe hygiene issues.',
+    category: 'Garbage Accumulation & Illegal Dumping',
+    priority: 'Medium',
+    status: 'Reported',
+    location: {
+      address: '80 Feet Road, Near Daily Fresh Mart, HAL 2nd Stage',
+      landmark: 'Behind bus shelter #4',
+      latitude: 12.9667,
+      longitude: 77.6532,
+      city: 'Bengaluru',
+      pincode: '560008',
+      zone: 'East Zone'
+    },
+    images: [
+      'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80&w=800'
+    ],
+    citizenId: 'user-citizen-1',
+    citizenName: 'Vandhana Vijayakumar',
+    citizenEmail: 'vandhana@citizen.org',
+    citizenPhone: '+91 98450 12345',
+    departmentId: 'dept-swm',
+    departmentName: 'Solid Waste Management & Sanitation',
+    upvotes: 19,
+    upvotedBy: [],
+    impactMultiplier: 1.9,
+    slaHours: 12,
+    slaDeadline: new Date(Date.now() + 6 * 3600 * 1000).toISOString(),
+    isSlaBreached: false,
+    aiAnalysis: {
+      suggestedCategory: 'Garbage Accumulation & Illegal Dumping',
+      confidence: 0.96,
+      suggestedPriority: 'Medium',
+      priorityReason: 'High organic waste accumulation near food market; risk of disease vectors and blocked walkway.',
+      summary: 'Commercial area dumpster overflow causing sidewalk obstruction and sanitation risk.',
+      detectedKeywords: ['overflowing', 'trash', 'vegetable market', 'sidewalk', 'stray animals'],
+      isPotentialDuplicate: false,
+      sentimentRisk: 'Normal',
+      estimatedRemediationDays: 1
+    },
+    timeline: [
+      {
+        id: 'tl-1043-1',
+        status: 'Reported',
+        title: 'Report Received',
+        description: 'Citizen reported waste spill near vegetable market.',
+        actorName: 'Vandhana Vijayakumar',
+        actorRole: 'citizen',
+        timestamp: '2026-03-03T07:10:00Z'
+      }
+    ],
+    createdAt: '2026-03-03T07:10:00Z',
+    updatedAt: '2026-03-03T07:10:00Z'
+  },
+  {
+    id: 'CP-2026-1044',
+    title: 'Drinking Water Pipeline Burst gushing water on main road',
+    description: 'High pressure drinking water pipe has ruptured near 14th Main cross. Clean water is flowing in torrents, creating artificial waterlogging and eroding the road surface foundation.',
+    category: 'Water Pipe Leakage & Sewage Block',
+    priority: 'Urgent',
+    status: 'Verified',
+    location: {
+      address: '14th Main, 7th Sector, HSR Layout',
+      landmark: 'Near BDA Complex water tank junction',
+      latitude: 12.9121,
+      longitude: 77.6385,
+      city: 'Bengaluru',
+      pincode: '560102',
+      zone: 'South Zone'
+    },
+    images: [
+      'https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&q=80&w=800'
+    ],
+    citizenId: 'user-citizen-1',
+    citizenName: 'Vandhana Vijayakumar',
+    citizenEmail: 'vandhana@citizen.org',
+    departmentId: 'dept-water',
+    departmentName: 'Water Supply & Sewerage Board',
+    assignedOfficerId: 'user-officer-1',
+    assignedOfficerName: 'Rajesh Kumar',
+    upvotes: 42,
+    upvotedBy: ['user-citizen-1'],
+    impactMultiplier: 4.5,
+    slaHours: 24,
+    slaDeadline: '2026-03-02T06:30:00Z',
+    isSlaBreached: false,
+    aiAnalysis: {
+      suggestedCategory: 'Water Pipe Leakage & Sewage Block',
+      confidence: 0.97,
+      suggestedPriority: 'Urgent',
+      priorityReason: 'Potable water loss, torrential volume, and structural road foundation erosion warrant immediate valve closure.',
+      summary: 'Main supply pipe rupture leaking clean municipal water; valve isolation and collar clamp needed.',
+      detectedKeywords: ['burst', 'clean water', 'torrent', 'waterlogging', 'eroding road'],
+      isPotentialDuplicate: false,
+      sentimentRisk: 'Critical Emergency',
+      estimatedRemediationDays: 1
+    },
+    resolution: {
+      resolvedAt: '2026-03-01T18:00:00Z',
+      resolvedBy: 'Rajesh Kumar',
+      resolutionNotes: 'Emergency pipeline crew shut the feeder sluice valve #8. A 300mm cracked ductile iron pipe section was cut and replaced with mechanical joint coupling. Road surface leveled and cleared.',
+      evidenceImages: [
+        'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&q=80&w=800'
+      ],
+      citizenVerified: true,
+      citizenRating: 5,
+      citizenFeedback: 'Super fast response! The water flow stopped within 2 hours and the crew cleanly patched the dug up trench.',
+      verifiedAt: '2026-03-02T09:15:00Z',
+      workOrderNumber: 'WO-WSSB-2026-118',
+      costEstimate: '₹ 18,500 (Emergency Utility Pipeline Fund)'
+    },
+    timeline: [
+      {
+        id: 'tl-1044-1',
+        status: 'Reported',
+        title: 'Urgent Leak Reported',
+        description: 'Vandhana reported emergency pipeline rupture.',
+        actorName: 'Vandhana Vijayakumar',
+        actorRole: 'citizen',
+        timestamp: '2026-03-01T06:30:00Z'
+      },
+      {
+        id: 'tl-1044-2',
+        status: 'In Progress',
+        title: 'Emergency Valve Isolated',
+        description: 'Water board technicians closed sector branch valve.',
+        actorName: 'Rajesh Kumar',
+        actorRole: 'officer',
+        timestamp: '2026-03-01T08:15:00Z'
+      },
+      {
+        id: 'tl-1044-3',
+        status: 'Resolved',
+        title: 'Pipe Repaired & Pressure Tested',
+        description: 'Ductile iron sleeve welded. Water supply restored.',
+        actorName: 'Rajesh Kumar',
+        actorRole: 'officer',
+        timestamp: '2026-03-01T18:00:00Z'
+      },
+      {
+        id: 'tl-1044-4',
+        status: 'Verified',
+        title: 'Citizen Confirmed Resolution',
+        description: 'Vandhana inspected the site and awarded 5-star rating.',
+        actorName: 'Vandhana Vijayakumar',
+        actorRole: 'citizen',
+        timestamp: '2026-03-02T09:15:00Z'
+      }
+    ],
+    createdAt: '2026-03-01T06:30:00Z',
+    updatedAt: '2026-03-02T09:15:00Z'
+  },
+  {
+    id: 'CP-2026-1045',
+    title: 'Exposed live wire hanging from low transformer fence',
+    description: 'High voltage wire hanging down to 4 feet off the pavement right beside an elementary school gate. Sparks noticed when dry tree branch touched it.',
+    category: 'Sparking Transformers & Live Wires',
+    priority: 'Urgent',
+    status: 'Assigned',
+    location: {
+      address: 'Near St. Mary School, 3rd Block, Jayanagar',
+      landmark: 'Opposite Jayanagar Post Office',
+      latitude: 12.9298,
+      longitude: 77.5834,
+      city: 'Bengaluru',
+      pincode: '560011',
+      zone: 'South Zone'
+    },
+    images: [
+      'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800'
+    ],
+    citizenId: 'user-citizen-1',
+    citizenName: 'Vandhana Vijayakumar',
+    citizenEmail: 'vandhana@citizen.org',
+    departmentId: 'dept-eb',
+    departmentName: 'Electricity & Lighting Authority',
+    assignedOfficerId: 'user-officer-2',
+    assignedOfficerName: 'Priya Sundaram',
+    upvotes: 56,
+    upvotedBy: ['user-citizen-1'],
+    impactMultiplier: 5.0,
+    slaHours: 12,
+    slaDeadline: new Date(Date.now() + 3 * 3600 * 1000).toISOString(),
+    isSlaBreached: false,
+    aiAnalysis: {
+      suggestedCategory: 'Sparking Transformers & Live Wires',
+      confidence: 0.99,
+      suggestedPriority: 'Urgent',
+      priorityReason: 'CRITICAL SAFETY HAZARD: Live electrical cable within children reach next to school gate with reported sparking.',
+      summary: 'Hanging live conductor near school posing high risk of electrocution; power shutdown and re-stringing required immediately.',
+      detectedKeywords: ['live wire', 'sparks', 'elementary school', 'transformer', 'high voltage'],
+      isPotentialDuplicate: false,
+      sentimentRisk: 'Critical Emergency',
+      estimatedRemediationDays: 1
+    },
+    timeline: [
+      {
+        id: 'tl-1045-1',
+        status: 'Reported',
+        title: 'Hazard Reported',
+        description: 'Citizen flagged exposed electrical wire near school.',
+        actorName: 'Vandhana Vijayakumar',
+        actorRole: 'citizen',
+        timestamp: '2026-03-03T11:45:00Z'
+      },
+      {
+        id: 'tl-1045-2',
+        status: 'Assigned',
+        title: 'Priority Auto-Escalation',
+        description: 'System identified school proximity; auto-escalated to Emergency Electrical Patrol.',
+        actorName: 'CivicPulse AI Engine',
+        actorRole: 'system',
+        timestamp: '2026-03-03T11:45:10Z'
+      }
+    ],
+    createdAt: '2026-03-03T11:45:00Z',
+    updatedAt: '2026-03-03T11:45:10Z'
+  }
+];
+
+export const seedComments: Comment[] = [
+  {
+    id: 'comm-1',
+    reportId: 'CP-2026-1041',
+    userId: 'user-citizen-1',
+    userName: 'Vandhana Vijayakumar',
+    userRole: 'citizen',
+    userAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250',
+    message: 'Thanks for sending the crew so quickly! Please also check the corner of 13th cross as another crack is starting to form.',
+    createdAt: '2026-03-01T15:10:00Z'
+  },
+  {
+    id: 'comm-2',
+    reportId: 'CP-2026-1041',
+    userId: 'user-officer-1',
+    userName: 'Rajesh Kumar',
+    userRole: 'officer',
+    userAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250',
+    message: 'Noted Vandhana. Our patch roller is on site, we will reinforce that joint as well before sealing.',
+    createdAt: '2026-03-01T15:45:00Z'
+  },
+  {
+    id: 'comm-3',
+    reportId: 'CP-2026-1042',
+    userId: 'user-officer-2',
+    userName: 'Priya Sundaram',
+    userRole: 'officer',
+    userAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250',
+    message: 'Work completed and lamps powered on. Citizen Vandhana, please verify if the illumination level is satisfactory on your evening walk.',
+    createdAt: '2026-03-02T16:50:00Z'
+  }
+];
+
+export const seedNotifications: Notification[] = [
+  {
+    id: 'notif-1',
+    userId: 'user-citizen-1',
+    reportId: 'CP-2026-1042',
+    reportTitle: 'Cluster of 4 Broken LED Streetlights',
+    type: 'resolved',
+    title: 'Issue Marked as Resolved! 🎉',
+    message: 'Officer Priya Sundaram marked your street lighting report as resolved. Please inspect and confirm resolution.',
+    read: false,
+    createdAt: '2026-03-02T16:45:00Z'
+  },
+  {
+    id: 'notif-2',
+    userId: 'user-citizen-1',
+    reportId: 'CP-2026-1041',
+    reportTitle: 'Severe Deep Pothole on 100ft Road',
+    type: 'status_change',
+    title: 'Work In Progress 🚧',
+    message: 'Road maintenance crew is on site with bituminous asphalt mix.',
+    read: true,
+    createdAt: '2026-03-01T14:20:00Z'
+  },
+  {
+    id: 'notif-3',
+    userId: 'user-officer-1',
+    reportId: 'CP-2026-1045',
+    reportTitle: 'Exposed live wire hanging from low transformer',
+    type: 'sla_warning',
+    title: '⚠️ SLA URGENCY: School Hazard within 3h of breach',
+    message: 'Immediate dispatch required near St. Mary School before afternoon classes dismiss.',
+    read: false,
+    createdAt: '2026-03-03T11:45:00Z'
+  }
+];
+
+export const seedAuditLogs: AuditLog[] = [
+  {
+    id: 'log-1',
+    action: 'REPORT_SUBMITTED',
+    actorId: 'user-citizen-1',
+    actorName: 'Vandhana Vijayakumar',
+    actorRole: 'citizen',
+    targetId: 'CP-2026-1041',
+    details: 'New complaint registered with coordinates (12.9719, 77.6412) in East Zone',
+    timestamp: '2026-03-01T08:15:00Z'
+  },
+  {
+    id: 'log-2',
+    action: 'STATUS_UPDATED',
+    actorId: 'user-officer-1',
+    actorName: 'Rajesh Kumar',
+    actorRole: 'officer',
+    targetId: 'CP-2026-1041',
+    details: 'Status changed from Assigned to In Progress',
+    timestamp: '2026-03-01T14:20:00Z'
+  },
+  {
+    id: 'log-3',
+    action: 'RESOLUTION_EVIDENCE_UPLOADED',
+    actorId: 'user-officer-2',
+    actorName: 'Priya Sundaram',
+    actorRole: 'officer',
+    targetId: 'CP-2026-1042',
+    details: 'Resolution photo attached and work order #WO-ELA-2026-402 generated',
+    timestamp: '2026-03-02T16:45:00Z'
+  }
+];
